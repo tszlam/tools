@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+const router = useRouter()
+const routes = router.getRoutes().map(({ path, name }) => ({ path, name: (name as string) }))
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-for="{ path, name } in routes" :key="path" :to="path">{{ name }}</RouterLink>
+        <!-- <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink> -->
       </nav>
     </div>
   </header>
